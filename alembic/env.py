@@ -9,7 +9,7 @@ from alembic import context
 
 from models import Base
 
-load_dotenv()
+load_dotenv(override=False)
 
 DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")

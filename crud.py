@@ -62,10 +62,6 @@ def add_wish_item(db: Session, item: WishItemCreate, wishlist_id: int):
     db.refresh(db_item)
     return db_item
 
-
-# def get_wish_items(db: Session, wishlist_id: int):
-#     return db.query(WishItem).filter(WishItem.wishlist_id == wishlist_id).all()
-
 def get_wish_items(db: Session, wishlist_id: int):
     items = db.query(WishItem).filter(WishItem.wishlist_id == wishlist_id).all()
 
@@ -79,34 +75,7 @@ def get_wish_items(db: Session, wishlist_id: int):
     return items
 
 
-# def get_wish_items(db: Session, wishlist_id: int):
-#     subq = (
-#         db.query(
-#             WishItemStatus.item_id,
-#             func.max(WishItemStatus.timestamp).label("last_ts")
-#         )
-#         .group_by(WishItemStatus.item_id)
-#         .subquery()
-#     )
-#
-#     q = (
-#         db.query(WishItem, WishItemStatus.marked)
-#         .outerjoin(subq, WishItem.id == subq.c.item_id)
-#         .outerjoin(
-#             WishItemStatus,
-#             (WishItemStatus.item_id == WishItem.id) & (WishItemStatus.timestamp == subq.c.last_ts)
-#         )
-#         .filter(WishItem.wishlist_id == wishlist_id)
-#     )
-#
-#     results = []
-#     for item, marked in q.all():
-#         item.marked = marked if marked is not None else False
-#         results.append(item)
-#     return results
-
-
-def mark_item_status(db: Session, item_id: int, user_id: int, wishlist_id: int):
+def mark_item_status(db: Session, item_id: int, user_id: int):
     last_status = db.query(WishItemStatus).filter(
         WishItemStatus.item_id == item_id,
         WishItemStatus.user_id == user_id
