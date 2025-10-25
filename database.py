@@ -16,7 +16,7 @@ import os
 #   postgres:15-alpine
 
 
-load_dotenv(override=False)
+load_dotenv()
 
 DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
@@ -25,6 +25,10 @@ DB_NAME = os.getenv("DB_NAME")
 
 DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}?sslmode=require"
 
+print(f"DB_USER: {DB_USER}")
+print(f"DB_HOST: {DB_HOST}")
+print(f"DB_NAME: {DB_NAME}")
+print(f"DB_PASSWORD: {'SET' if DB_PASSWORD else 'NOT SET'}")
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
