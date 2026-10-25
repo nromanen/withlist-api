@@ -277,7 +277,7 @@ async def health_check():
     try:
         redis_client.ping()
         redis_status = "healthy"
-    except:
+    except redis.RedisError:
         redis_status = "unhealthy"
 
     return {
